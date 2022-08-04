@@ -1,0 +1,103 @@
+Finding Out Popular Courses for a Online Training Company
+=========================================================
+
+Problem Statement:
+-----------------
+
+We have been approached by an Online Training Company which
+provides training videos.The company provides different online
+courses to the users and each course comprises of multiple
+chapters.Courses have been assigned courseIds and Chapters in a
+course have chapterIDs.Note that chapterlds are unique.No two
+courses can have same chapterId.Each Course has a title also.
+Also, Users viewing the courses are given UserlIds.
+
+The company wants us to prepare an Apache Spark based report
+which will enable them to figure out which are the most popular
+courses on their training portal.
+
+The popularity of a course will depend on the total score it
+receives.The score which a course will get will be based on few
+business rules which are explained later in the document in
+detail.Please Refer the Business Rules** Section.To give a brief
+overview, consider if a course has 20 chapters and a user views 18
+chapters out of those, then the user has watched 90% of the course
+and the course will get a good score of 10 say.Like that each
+course can be watched by multiple users and scores will
+accumulate for that course.
+
+Final Ranking Chart Report will look like below, Starting with
+most popular course on the top.
+
+Score Title
+x1 Y1
+X2 Y2
+
+Dataset Details:
+
+Datasetl 1
+
+We have three csv files views-1.csv, views-2.csv and views-3.csv
+Also we have a viewsHeader.csv file which has the header information:
+
+userId, chapterId, dateAndTime
+This will be a log of viewings, showing which user has viewed which
+chapter. These chapterIds belong to courses. Also chapterIds are
+unique.
+
+Here is the sample raw data:
+
+userId chapterId
+14 96
+14 97
+15 96
+13 96
+14 99
+3 100
+
+Dataset 2: | So we have a much smaller dataset, chapters.csv which is a
+mapping of chapterlds to courseld.
+
+Sample Raw Data:
+
+chapterlId courseld
+96 1
+97 1
+98 1
+99 2
+
+Dataset 3:
+
+There is another dump file (titles.csv) containing courselds against their
+
+++++++++++++++++++++++++++++++++++++++++++++++++
+Find Out how many Chapters are there per course.
+++++++++++++++++++++++++++++++++++++++++++++++++
+
+Expected Output of Sample Raw Data:
+
+courseld chapters
+1 3
+3 10
+2 1
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+produce a ranking chart detailing based on which are the most popular courses by score.
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+** Business Rules:
+
+Scores which each courseld gets, will be based on few rules:
+Like ,If a user sticks through most of the course, that's more
+deserving of "points" than if someone bails out just a quarter
+way through the course. Following is the scoring system
+
+algorithm followed:
+
+if a user watches more than 90% of the course, the course
+
+gets 10 points
+
+if a user watches > 50% but <90% , it scores 4
+if a user watches > 25% but < 50% it scores 2
+Less than 25% is no score
