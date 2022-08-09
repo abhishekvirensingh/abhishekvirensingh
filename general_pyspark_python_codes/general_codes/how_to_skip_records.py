@@ -7,7 +7,7 @@ spark_conf.set("master", "local[*]")
 
 spark = SparkSession.builder.config(conf=spark_conf).getOrCreate()
 sc = spark.sparkContext
-data_rdd = sc.textFile("C:/Users/abhsingh/Downloads/skip.csv")
+data_rdd = sc.textFile("DataFiles/skip.csv")
 
 # output of data_rdd.zipWithIndex():
 
