@@ -20,7 +20,7 @@ spark = SparkSession.builder.config(conf=spark_conf).getOrCreate()
 
 regex = r'^(\S+) (\S+)\t(\S+)\,(\S+)'
 
-lines_df = spark.read.text("DataFiles/unstructured_data.txt")
+lines_df = spark.read.text("../DataFiles/unstructured_data.txt")
 
 final_df = lines_df.select(regexp_extract('value', regex, 1).alias("order_id").cast(IntegerType()),
                            regexp_extract('value', regex, 2).alias("date"),
