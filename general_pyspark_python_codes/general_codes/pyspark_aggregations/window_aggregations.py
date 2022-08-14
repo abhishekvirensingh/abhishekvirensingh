@@ -11,7 +11,7 @@ invoice_df = spark.read.format("csv").option("path", "../DataFiles/windowdata.cs
     .option("header", True)\
     .option("inferSchema", True).load()
 
-invoice_df.printSchema()
+# invoice_df.printSchema()
 
 # define the window
 window_form = Window.partitionBy("country").orderBy("weeknum") \
@@ -21,5 +21,13 @@ window_form = Window.partitionBy("country").orderBy("weeknum") \
 invoice_df.withColumn("RunningTotal",
                       f.sum("invoicevalue").over(window_form)
                       ).show()
+
+
+# Using Spark SQL :
+
+invoice_df.createOrReplaceTempView("invoices")
+
+spark.sql("select *,sum(invoicevalue) over(rows between unbounded preceding and current row) as running_total "
+          "from invoices").show()
 
 spark.stop()
