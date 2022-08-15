@@ -28,11 +28,11 @@ log_df = error_log_df.select("level",
                              ).dropna()
 
 log_df.createOrReplaceTempView("log")
-spark.sql("select level,"
-          "count(level) as error_count,"
-          "month,"
-          "month_num"
-          " from log group by month,level,month_num "
-          "order by month_num,count(level)").drop("month_num").show()
+results_df = spark.sql("select level,"
+                       "count(level) as error_count,"
+                       "month,"
+                       "month_num"
+                       " from log group by month,level,month_num "
+                       "order by month_num,count(level)").drop("month_num").show()
 
 spark.stop()
