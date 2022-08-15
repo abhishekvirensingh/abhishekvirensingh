@@ -1,0 +1,33 @@
+from pyspark import SparkConf
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import regexp_extract
+from pyspark.sql.types import IntegerType
+
+spark_conf = SparkConf()
+spark_conf.set("spark.master", "local[*]")
+
+spark = SparkSession.builder.config(conf=spark_conf).getOrCreate()
+
+######################################
+# sample of the data at hand :
+# 1 2013-07-25	1159,CLOSED
+# 2 2013-07-25	1159,PENDING_PAYMENT
+# 3 2013-07-25	1159,CLOSED
+######################################
+
+# creating a REGEX pattern based on the pattern of the above data.
+# used https://regex101.com/ for generating the REGEX
+
+regex = r'^(\S+) (\S+)\t(\S+)\,(\S+)'
+
+lines_df = spark.read.text("../DataFiles/unstructured_data.txt")
+
+final_df = lines_df.select(regexp_extract('value', regex, 1).alias("order_id").cast(IntegerType()),
+                           regexp_extract('value', regex, 2).alias("date"),
+                           regexp_extract('value', regex, 3).alias("customer_id").cast(IntegerType()),
+                           regexp_extract('value', regex, 4).alias("status"))
+final_df.show()
+
+final_df.printSchema()
+
+spark.stop()
