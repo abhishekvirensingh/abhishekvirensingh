@@ -1,4 +1,4 @@
-# 👋 Hi, I'm Abhishek Viren Singh
+# 👋 Hi, I'm Abhishek Singh
 
 ![Data Engineer Banner](https://capsule-render.vercel.app/api?type=wave&color=0:0E76A8,100:ffffff&height=120&section=header&text=Principal%20Data%20Engineer&fontSize=32&fontAlign=50&fontColor=ffffff)
 
